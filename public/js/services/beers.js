@@ -12,15 +12,20 @@ app.factory('beerService', function($http){
   var addToList = function(newBeer){
      console.log('from the service')
      console.log(newBeer);
-     beersList.push(newBeer);
-     console.log(beersList);
+     hardList.push(newBeer);
+     console.log(hardList);
   };
 
+  var removeFromList = function (index) {
+    hardList.splice(index, 1); 
+    console.log(index); 
+  };
 
   return {
     beersList:beersList,
     addToList:addToList,
-    hardList:hardList
+    hardList:hardList,
+    removeFromList:removeFromList
   }
 
 });

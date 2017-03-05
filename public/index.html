@@ -35,7 +35,7 @@
                  <!-- container of beers  ng-show="beerContainer"-->
                 <div>
 
-                    <div class="col-md-12 beer" ng-repeat="beer in hardList">
+                    <div class="col-md-12 beer" ng-repeat="beer in hardList | orderBy: '-name' track by $index">
                         <div class="col-md-3 beer-section">
                             <img src="{{beer.image}}">
                         </div>  
@@ -44,12 +44,12 @@
                             <h4>{{beer.style}} : {{beer.abv}}</h4>
                         </div>  
                         <div class="col-md-2 beer-section">
-                            <button type="button" class="btn btn-danger btn-sm">remove</button>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="removeFromList($index)">remove</button>
                         </div>  
                     </div>
                     <!--users show-->
                     <div ng-show="beerContainer">
-                        <div class="col-md-12 beer" ng-repeat="beer in beersList">
+                        <div class="col-md-12 beer" ng-repeat="beer in beersList ">
                             <div class="col-md-3 beer-section">
                                 <img src="{{beer.image}}">
                             </div>  
@@ -58,7 +58,7 @@
                                 <h4>{{beer.style}} : {{beer.abv}}</h4>
                             </div>  
                             <div class="col-md-2 beer-section">
-                                <button type="button" class="btn btn-danger btn-sm">remove</button>
+                                <button type="button" class="btn btn-danger btn-sm" ng-click="removeFromList($index)">remove</button>
                             </div>  
                         </div>
                     </div>    
