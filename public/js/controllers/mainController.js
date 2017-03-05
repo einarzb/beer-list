@@ -6,6 +6,7 @@ app.controller('mainController', function($scope, beerService) {
   $scope.image;
   $scope.beerContainer = false;
   $scope.beersList = beerService.beersList;
+  $scope.hardList = beerService.hardList;
 
   $scope.addBeer = function(newBeer) {
     $scope.beerContainer = true; //reveals beer container
