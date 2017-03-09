@@ -1,10 +1,18 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/beerslist');
+
 var app = express();
 
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
 
-app.get('/beer', function(req, res) {
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+app.get('/beers', function(req, res) {
   console.log("beer");  
 });
 
