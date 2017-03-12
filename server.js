@@ -21,11 +21,13 @@ app.get('/', function(req, res, next){
 //connectong DB to route
 app.get('/beers', function (req, res, next) {
 
+console.log('einarrrr')
     Beer.find(function (error, beers) { //beers is db name
           if (error) {
             console.error(error)
             return next(error); //express next function. middleware
           } else {
+            console.log('einarrrr')
             res.send(beers);
             console.log(beers);
           }
