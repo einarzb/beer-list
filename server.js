@@ -87,12 +87,14 @@ app.put('/beers/:id', function(req, res, next){
   });
 });
 
+//error
 app.use(function(req, res, next){
   var err = new Error('Not found');
   err.status = 404;
   next(err);
 });
 
+//starter
 app.listen(8000, function() {
   console.log("beer list project. Listening on 8000.")
 });
