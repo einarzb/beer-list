@@ -94,6 +94,15 @@ app.use(function(req, res, next){
   next(err);
 });
 
+// warning - not for use in production code!
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err
+  });
+});
+
 //starter
 app.listen(8000, function() {
   console.log("beer list project. Listening on 8000.")
