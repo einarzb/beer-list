@@ -1,30 +1,61 @@
+//package and module requirements
 var express = require('express');
-var app = express();
-
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/beerslist');
-var Beer = require("./models/beerModel")
-
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+var Beer = require("./models/beerModel") // ./ means local module and not something from npm
 
+var app = express();
+mongoose.connect('mongodb://localhost/beers');
+
+//middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 app.use(express.static('node_modules'));
 
+//API routes
 app.get('/', function(req, res, next){
   res.send('testing server')
 });
 
-app.get('/beers', function(req, res, next) {
-  console.log("beer"); 
-
-  res.json({
-    beers: [
-        { name: '512 IPA', style: 'IPA', image: 'http://bit.ly/1XtmB4d', abv: 5, rating: 5, averageRating: 5},
-        { name: '512 Pecan Porter', style: 'Porter', image: 'http://bit.ly/1Vk5xj4', abv: 4, rating: 3, averageRating: 2}
-  ]});
+app.get('/beers', function (req, res, next) {
+  Beer.find(function (error, beers) { //beers is db name
+    if (error) {
+      console.error(error)
+      return next(error);
+    } else {
+      res.send(beers);
+      console.log("sepouse to console my db objects");
+    }
+  });
 });
+
+app.post('/beers', function (req, res, next) {
+  Beer.create(req.body, function(err,beer){ //beer is an object
+    if (err) {
+      console.error(err)
+      return next(err);
+    }else{
+      res.json(beer); //return the json obj
+    }
+  }); 
+});
+
+app.delete('/beers/:id', function(req, res, next){
+
+  Beer.remove({_id:req.params.id}, function(err){
+    if (err){
+      console.error(err);
+      return next(err);
+    } else {
+      res.send("beer deleted");
+      console.log("beer removed");
+    }
+  });
+  // console.log(req.params.id);
+  // res.send(req.params.id);
+});
+
 
 app.listen(8000, function() {
   console.log("beer list project. Listening on 8000.")

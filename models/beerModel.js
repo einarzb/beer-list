@@ -6,11 +6,11 @@ var beerSchema = new Schema ({
   style: {type:String},
   image:{type:String},
   abv: {type:Number},
-  rating: {type:Number},
-  averageRating: {type:Number}
+  // _id:{type:req.params.id}
 });
 
 var Beer = mongoose.model('BeerModel', beerSchema); 
-module.exports = Beer;
+module.exports = Beer; //same as returning object
+
 //when we require this file we want to return the object that was assigned to module.export.
 
