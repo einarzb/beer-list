@@ -60,6 +60,22 @@ app.post('/beers', function(req, res, next) {
 });
 */
 
+app.delete('/beers/:id', function(req, res, next){ //id is placeholder for 58c529809b1b69d3cdcf1940
+  // var id = req.params.id;
+  // console.log(id);
+  // res.send("delete route");
+  Beer.remove({_id: req.params.id},function(err){
+    if(err){
+      console.error(err);
+      return next (err);
+    }else{
+    res.send("beer deleted");  
+    }
+  });
+});
+
+
+
 //delets beer 
 
 // app.delete('/beers/:id', function(req, res, next){
