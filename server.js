@@ -19,16 +19,25 @@ app.get('/', function(req, res, next){
 });
 
 app.get('/beers', function (req, res, next) {
-  Beer.find(function (error, beers) { //beers is db name
-    if (error) {
-      console.error(error)
-      return next(error);
-    } else {
-      res.send(beers);
-      console.log("sepouse to console my db objects");
-    }
-  });
+
+    Beer.find(function (error, beers) { //beers is db name
+          if (error) {
+            console.error(error)
+            return next(error); //express next function
+          } else {
+            res.send(beers);
+            console.log(beers);
+          }
+     });
+
+  // res.json({
+  //   beers: [
+  //   { name: '512 IPA', style: 'IPA', image_url: 'http://bit.ly/1XtmB4d', abv: 5 },
+  //   { name: '512 Pecan Porter', style: 'Porter', image_url: 'http://bit.ly/1Vk5xj4', abv: 4 }
+  // ]});
 });
+
+
 
 app.post('/beers', function (req, res, next) {
   Beer.create(req.body, function(err,beer){ //beer is an object
@@ -56,6 +65,11 @@ app.delete('/beers/:id', function(req, res, next){
   // res.send(req.params.id);
 });
 
+app.use(function(req, res, next){
+  var err = new Error('Not found');
+  err.status = 404;
+  next(err);
+});
 
 app.listen(8000, function() {
   console.log("beer list project. Listening on 8000.")
