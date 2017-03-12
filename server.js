@@ -18,52 +18,64 @@ app.get('/', function(req, res, next){
   res.send('testing server')
 });
 
+//connectong DB to route
 app.get('/beers', function (req, res, next) {
 
     Beer.find(function (error, beers) { //beers is db name
           if (error) {
             console.error(error)
-            return next(error); //express next function
+            return next(error); //express next function. middleware
           } else {
             res.send(beers);
             console.log(beers);
           }
      });
-
-  // res.json({
-  //   beers: [
-  //   { name: '512 IPA', style: 'IPA', image_url: 'http://bit.ly/1XtmB4d', abv: 5 },
-  //   { name: '512 Pecan Porter', style: 'Porter', image_url: 'http://bit.ly/1Vk5xj4', abv: 4 }
-  // ]});
 });
 
-
+//adding beers
 
 app.post('/beers', function (req, res, next) {
-  Beer.create(req.body, function(err,beer){ //beer is an object
+    var beer = new Beer(req.body); //created a new Beer instance using the hard coded data on req.body
+
+    beer.save(function(err,beer){ //saving the beer object
+      if (err) {
+        console.error(err)
+        return next(err); //middleware
+      }else{
+        res.json(beer); //return the json obj to CLIENT
+      }
+    }); 
+});
+
+/* short way to do that: 
+app.post('/beers', function(req, res, next) {
+  Beer.create(req.body, function(err, beer) {
     if (err) {
       console.error(err)
       return next(err);
-    }else{
-      res.json(beer); //return the json obj
-    }
-  }); 
-});
-
-app.delete('/beers/:id', function(req, res, next){
-
-  Beer.remove({_id:req.params.id}, function(err){
-    if (err){
-      console.error(err);
-      return next(err);
     } else {
-      res.send("beer deleted");
-      console.log("beer removed");
+      res.json(beer);
     }
   });
-  // console.log(req.params.id);
-  // res.send(req.params.id);
 });
+*/
+
+//delets beer 
+
+// app.delete('/beers/:id', function(req, res, next){
+
+//   Beer.remove({_id:req.params.id}, function(err){
+//     if (err){
+//       console.error(err);
+//       return next(err);
+//     } else {
+//       res.send("beer deleted");
+//       console.log("beer removed");
+//     }
+//   });
+//   // console.log(req.params.id);
+//   // res.send(req.params.id);
+// });
 
 app.use(function(req, res, next){
   var err = new Error('Not found');
