@@ -1,6 +1,6 @@
 app.factory('beerService', function($http){
    
-  var beersList = [];
+  var beerFactory = {beersList: []};
        
   var hardList = [
   {name:'Preachers Daughter Amber Ale',image:'http://fountainsquarebrewery.com/wp-content/uploads/2017/01/04.png',abv:'6.0%',style:'American Amber'},
@@ -22,7 +22,7 @@ app.factory('beerService', function($http){
   };
 
   return {
-    beersList:beersList,
+    beerFactory:beerFactory,
     addToList:addToList,
     hardList:hardList,
     removeFromList:removeFromList,

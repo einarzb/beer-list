@@ -7,7 +7,7 @@ app.controller('mainController', function($scope, beerService) {
   $scope.beerContainer = false;
 
   //dynamic array
-  $scope.beersList = beerService.beersList;
+  $scope.beersList = beerService.beerFactory.beersList;
   //hardcoded array
   $scope.hardList = beerService.hardList;
 
