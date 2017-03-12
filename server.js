@@ -60,6 +60,7 @@ app.post('/beers', function(req, res, next) {
 });
 */
 
+//delete
 app.delete('/beers/:id', function(req, res, next){ //id is placeholder for 58c529809b1b69d3cdcf1940
   // var id = req.params.id;
   // console.log(id);
@@ -74,24 +75,17 @@ app.delete('/beers/:id', function(req, res, next){ //id is placeholder for 58c52
   });
 });
 
-
-
-//delets beer 
-
-// app.delete('/beers/:id', function(req, res, next){
-
-//   Beer.remove({_id:req.params.id}, function(err){
-//     if (err){
-//       console.error(err);
-//       return next(err);
-//     } else {
-//       res.send("beer deleted");
-//       console.log("beer removed");
-//     }
-//   });
-//   // console.log(req.params.id);
-//   // res.send(req.params.id);
-// });
+//update 
+app.put('/beers/:id', function(req, res, next){
+  Beer.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}).exec(function(beer, err){ //pass 3 things: id, req.body, boolean and func
+     if(err){
+      console.error(err);
+      return next (err);
+    }else{
+      res.send(beer);
+    }
+  });
+});
 
 app.use(function(req, res, next){
   var err = new Error('Not found');
